@@ -27,16 +27,40 @@ public class Users {
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
 
+    @ManyToOne
+    @JoinColumn(name = "id_direccion", nullable = false)
+    private Direccion direccion;
+
+    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
+    private Carrito carrito;
+
     public Users(){
 
     }
 
-    public Users(Rol rol,String nombre, String correo, String password, String telefono){
+    public Users(Rol rol,Direccion direccion ,String nombre, String correo, String password, String telefono){
         this.nombre = nombre;
         this.correo = correo;
         this.password = password;
         this.telefono = telefono;
         this.rol = rol;
+        this.direccion = direccion;
+    }
+
+    public void setCarrito(Carrito carrito) {
+        this.carrito = carrito;
+    }
+
+    public Carrito getCarrito() {
+        return carrito;
+    }
+
+    public Direccion getDireccion() {
+        return direccion;
+    }
+
+    public void setDireccion(Direccion direccion) {
+        this.direccion = direccion;
     }
 
     public Long getId() {
