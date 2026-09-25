@@ -23,12 +23,12 @@ public class Users {
     @Column(name = "telefono", nullable = false, length = 20)
     private String telefono;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_rol", nullable = false)
     private Rol rol;
 
-    @ManyToOne
-    @JoinColumn(name = "id_direccion", nullable = false)
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_direccion", nullable = true)
     private Direccion direccion;
 
     @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
