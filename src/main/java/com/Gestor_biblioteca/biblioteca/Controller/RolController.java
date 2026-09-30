@@ -14,12 +14,12 @@ public class RolController {
     @Autowired
     private RolService rolService;
 
-    @GetMapping
+    @GetMapping("/ver")
     public List<Rol> verRoles(){
         return rolService.verRoles();
     }
 
-    @PostMapping
+    @PostMapping("/agregar")
     public Rol agregaRol(@RequestBody Rol rol){
         return rolService.crearRol(rol);
     }
