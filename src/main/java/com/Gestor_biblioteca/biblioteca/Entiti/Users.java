@@ -3,12 +3,12 @@ package com.Gestor_biblioteca.biblioteca.Entiti;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "users")
+@Table(name = "usuario")
 public class Users {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id_users")
+    @Column(name = "usuario_id")
     private Long id;
 
     @Column(name = "nombre", nullable = false, length = 100)
@@ -20,47 +20,20 @@ public class Users {
     @Column(name = "password", nullable = false, length = 260)
     private String password;
 
-    @Column(name = "telefono", nullable = false, length = 20)
-    private String telefono;
-
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_rol", nullable = false)
+    @JoinColumn(name = "rol_id", nullable = false)
     private Rol rol;
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_direccion", nullable = true)
-    private Direccion direccion;
-
-    @OneToOne(mappedBy = "users", cascade = CascadeType.ALL)
-    private Carrito carrito;
 
     public Users(){
 
     }
 
-    public Users(Rol rol,Direccion direccion ,String nombre, String correo, String password, String telefono){
+    public Users(Rol rol ,String nombre, String correo, String password){
         this.nombre = nombre;
         this.correo = correo;
         this.password = password;
-        this.telefono = telefono;
         this.rol = rol;
-        this.direccion = direccion;
-    }
-
-    public void setCarrito(Carrito carrito) {
-        this.carrito = carrito;
-    }
-
-    public Carrito getCarrito() {
-        return carrito;
-    }
-
-    public Direccion getDireccion() {
-        return direccion;
-    }
-
-    public void setDireccion(Direccion direccion) {
-        this.direccion = direccion;
     }
 
     public Long getId() {
@@ -78,9 +51,6 @@ public class Users {
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
-
-    public String getTelefono() { return telefono; }
-    public void setTelefono(String telefono) { this.telefono = telefono; }
 
     public Rol getRol() {
         return rol;

@@ -16,8 +16,6 @@ public class Direccion {
     @Column(name = "direccion", nullable = false, length = 150)
     private String direccion;
 
-    @OneToMany(mappedBy = "direccion")
-    private List<Users> usuarios;
 
     public Direccion(){
 
@@ -43,11 +41,4 @@ public class Direccion {
         this.direccion = direccion;
     }
 
-    public List<Users> getUsuarios() {
-        return usuarios;
-    }
-
-    public void setUsuarios(List<Users> usuarios) {
-        this.usuarios = usuarios;
-    }
 }
