@@ -1,8 +1,8 @@
 package com.Gestor_biblioteca.biblioteca.Controller;
 
+import com.Gestor_biblioteca.biblioteca.Dto.LoginRequest;
 import com.Gestor_biblioteca.biblioteca.Entiti.Users;
 import com.Gestor_biblioteca.biblioteca.Service.AuthService;
-import org.apache.catalina.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -22,7 +22,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public Users login(@RequestBody Users users){
-        return authService.login(users);
+    public Users login(@RequestBody LoginRequest loginrequest){
+        return authService.login(loginrequest);
     }
 }

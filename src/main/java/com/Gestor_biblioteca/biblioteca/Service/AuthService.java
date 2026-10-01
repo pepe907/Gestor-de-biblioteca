@@ -1,5 +1,7 @@
 package com.Gestor_biblioteca.biblioteca.Service;
 
+import com.Gestor_biblioteca.biblioteca.Dto.LoginRequest;
+import com.Gestor_biblioteca.biblioteca.Dto.LoginResponse;
 import com.Gestor_biblioteca.biblioteca.Entiti.Rol;
 import com.Gestor_biblioteca.biblioteca.Entiti.Users;
 import com.Gestor_biblioteca.biblioteca.Repository.RolRepository;
@@ -21,25 +23,26 @@ public class AuthService {
     private BCryptPasswordEncoder passwordEncoder;
 
     public Users crearCuenta(Users users){
-        if(users.getRol() != null && users.getId() != null){
-            Rol rol = rolRepository.findById(users.getRol().getId())
-                    .orElseThrow(() -> new RuntimeException(" El rol con id" + users.getRol().getId() + "No existe"));
-            users.setRol(rol);
-        }else {
-            throw new RuntimeException(" El Usuario Necesita un rol para registrarse ");
-        }
-
-        String passwordConfig = passwordEncoder.encode(users.getPassword());
-        users.setPassword(passwordConfig);
-        return usersRepository.save(users);
+       Long rolId;
+       if (users.getRol() != null && users.getRol().getId() != null){
+           rolId = users.getRol().getId();
+       } else {
+           rolId = 1L;
+       }
+        Rol rol = rolRepository.findById(rolId)
+               .orElseThrow(() -> new RuntimeException("Rol id: " + rolId + "no existe "));
+       users.setRol(rol);
+       String passwordConfig = passwordEncoder.encode(users.getPassword());
+       users.setPassword(passwordConfig);
+       return usersRepository.save(users);
     }
 
-    public Users login(Users users){
-        if(users.getCorreo() != null && users.getPassword() != null){
-             Users correoEncontrado = usersRepository.findByCorreo(users.getCorreo());
+    public Users login(LoginRequest loginrequest){
+        if(loginrequest.getCorreo() != null){
+             Users correoEncontrado = usersRepository.findByCorreo(loginrequest.getCorreo());
              if (correoEncontrado != null){
-                 if (correoEncontrado.getPassword().equals(users.getPassword())){
-                     return users;
+                 if (passwordEncoder.matches(loginrequest.getPassword(),correoEncontrado.getPassword())){
+                     return correoEncontrado;
                  }
              }
         }
