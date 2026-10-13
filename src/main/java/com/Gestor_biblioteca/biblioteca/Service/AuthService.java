@@ -27,7 +27,7 @@ public class AuthService {
        if (users.getRol() != null && users.getRol().getId() != null){
            rolId = users.getRol().getId();
        } else {
-           rolId = 1L;
+           rolId = 4L;
        }
         Rol rol = rolRepository.findById(rolId)
                .orElseThrow(() -> new RuntimeException("Rol id: " + rolId + "no existe "));
