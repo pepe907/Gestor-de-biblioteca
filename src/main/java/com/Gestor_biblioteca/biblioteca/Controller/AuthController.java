@@ -1,6 +1,7 @@
 package com.Gestor_biblioteca.biblioteca.Controller;
 
 import com.Gestor_biblioteca.biblioteca.Dto.LoginRequest;
+import com.Gestor_biblioteca.biblioteca.Dto.RegisterRequest;
 import com.Gestor_biblioteca.biblioteca.Entiti.Users;
 import com.Gestor_biblioteca.biblioteca.Service.AuthService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,8 @@ public class AuthController {
     private AuthService authService;
 
     @PostMapping("/crear")
-    public Users crear(@RequestBody  Users users){
-        return authService.crearCuenta(users);
+    public Users crear(@RequestBody RegisterRequest registerRequest){
+        return authService.crearCuenta(registerRequest);
     }
 
     @PostMapping("/login")
