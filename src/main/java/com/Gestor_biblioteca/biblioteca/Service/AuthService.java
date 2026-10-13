@@ -2,6 +2,7 @@ package com.Gestor_biblioteca.biblioteca.Service;
 
 import com.Gestor_biblioteca.biblioteca.Dto.LoginRequest;
 import com.Gestor_biblioteca.biblioteca.Dto.LoginResponse;
+import com.Gestor_biblioteca.biblioteca.Dto.RegisterRequest;
 import com.Gestor_biblioteca.biblioteca.Entiti.Rol;
 import com.Gestor_biblioteca.biblioteca.Entiti.Users;
 import com.Gestor_biblioteca.biblioteca.Repository.RolRepository;
@@ -22,19 +23,20 @@ public class AuthService {
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
-    public Users crearCuenta(Users users){
-       Long rolId;
-       if (users.getRol() != null && users.getRol().getId() != null){
-           rolId = users.getRol().getId();
-       } else {
-           rolId = 4L;
-       }
+    public Users crearCuenta(RegisterRequest registerRequest){
+        Long rolId = 4L;
+
         Rol rol = rolRepository.findById(rolId)
-               .orElseThrow(() -> new RuntimeException("Rol id: " + rolId + "no existe "));
-       users.setRol(rol);
-       String passwordConfig = passwordEncoder.encode(users.getPassword());
-       users.setPassword(passwordConfig);
-       return usersRepository.save(users);
+                .orElseThrow(() -> new RuntimeException("Rol " + rolId + "no disponible"));
+
+        Users users = new Users();
+        users.setNombre(registerRequest.getNombre());
+        users.setCorreo(registerRequest.getCorreo());
+        users.setPassword(registerRequest.getPassword());
+        String config = passwordEncoder.encode(registerRequest.getPassword());
+        users.setPassword(config);
+        users.setRol(rol);
+        return usersRepository.save(users);
     }
 
     public Users login(LoginRequest loginrequest){

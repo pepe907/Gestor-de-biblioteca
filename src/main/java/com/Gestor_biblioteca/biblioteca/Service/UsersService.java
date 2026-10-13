@@ -1,5 +1,6 @@
 package com.Gestor_biblioteca.biblioteca.Service;
 
+import com.Gestor_biblioteca.biblioteca.Dto.RegisterRequest;
 import com.Gestor_biblioteca.biblioteca.Entiti.Rol;
 import com.Gestor_biblioteca.biblioteca.Entiti.Users;
 import com.Gestor_biblioteca.biblioteca.Repository.RolRepository;
@@ -30,21 +31,18 @@ public class UsersService {
         return usersRepository.findById(id).orElse(null);
     }
 
-    public Users agregar(Users users){
-        Long rolId;
-
-        if (users.getRol() != null && users.getRol().getId() != null){
-            rolId = users.getRol().getId();
-        }else {
-            rolId = 4L;
-        }
+    public Users agregar(RegisterRequest registerRequest){
+        Long rolId = 4L;
 
         Rol rol = rolRepository.findById(rolId)
                 .orElseThrow(() -> new RuntimeException("Rol " + rolId + "no disponible"));
 
+        Users users = new Users();
+        users.setNombre(registerRequest.getNombre());
+        users.setCorreo(registerRequest.getCorreo());
+        users.setPassword(bCryptPasswordEncoder.encode(registerRequest.getPassword()));
+        System.out.println("Contraseña recibida:" + registerRequest.getPassword());
         users.setRol(rol);
-        String password = bCryptPasswordEncoder.encode(users.getPassword());
-        users.setPassword(password);
         return usersRepository.save(users);
 
     }
