@@ -14,12 +14,12 @@ public class DireccionController {
     @Autowired
     private DireccionService direccionService;
 
-    @GetMapping
+    @GetMapping("/ver")
     public List<Direccion> verDireccion(){
         return direccionService.verDireccion();
     }
 
-    @PostMapping
+    @PostMapping("/agregar")
     public Direccion crearDireccion(@RequestBody Direccion direccion){
         return direccionService.agregaDireccion(direccion);
     }
