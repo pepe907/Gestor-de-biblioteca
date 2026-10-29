@@ -1,7 +1,9 @@
 package com.Gestor_biblioteca.biblioteca.Controller;
 
+import com.Gestor_biblioteca.biblioteca.Dto.LibroRequest;
 import com.Gestor_biblioteca.biblioteca.Entiti.Libros;
 import com.Gestor_biblioteca.biblioteca.Service.LibroService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,8 +17,13 @@ public class LibrosController {
     private LibroService libroService;
 
     @PostMapping("/agregar")
-    public Libros agregarLibros(@RequestBody Libros libros){
-        return libroService.agregar(libros);
+    public Libros agregarLibros(@RequestBody LibroRequest libroRequest){
+        return libroService.agregar(libroRequest);
+    }
+
+    @PutMapping("/editar/{id}")
+    public Libros editarLibros(@PathVariable Long id, @RequestBody @Valid LibroRequest libroRequest){
+        return libroService.editar(id, libroRequest);
     }
 
     @GetMapping("/ver")
